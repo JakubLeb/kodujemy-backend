@@ -57,7 +57,20 @@ function newId(prefix = 'u') {
   return prefix + '_' + crypto.randomBytes(12).toString('hex');
 }
 
+// Czas życia sesji - po tym okresie token wygasa i trzeba zalogować się ponownie.
+const SESSION_TTL_DAYS = 30;
+
+// Tworzy nową sesję z datą wygaśnięcia i zwraca token.
+async function createSession(userId) {
+  const token = newToken();
+  await sql`
+    INSERT INTO sessions (token, user_id, expires_at)
+    VALUES (${token}, ${userId}, now() + (${SESSION_TTL_DAYS} * INTERVAL '1 day'))`;
+  return token;
+}
+
 // Wyciąga usera na podstawie nagłówka Authorization: Bearer <token>.
+// Honoruje wygasanie sesji - wygasły token traktujemy jak brak sesji.
 // Zwraca obiekt usera (z bazy) albo null.
 async function getUserFromAuth(event) {
   const header =
@@ -69,8 +82,12 @@ async function getUserFromAuth(event) {
     SELECT u.* FROM sessions s
     JOIN users u ON u.id = s.user_id
     WHERE s.token = ${token}
+      AND (s.expires_at IS NULL OR s.expires_at > now())
     LIMIT 1`;
-  return rows[0] || null;
+  if (rows[0]) return rows[0];
+  // Best-effort sprzątanie: usuń wygasły token (nie blokuj odpowiedzi, gdy się nie uda).
+  sql`DELETE FROM sessions WHERE token = ${token} AND expires_at <= now()`.catch(() => {});
+  return null;
 }
 
 // Parsuje body żądania jako JSON (bezpiecznie).
@@ -143,6 +160,7 @@ module.exports = {
   verifyPassword,
   newToken,
   newId,
+  createSession,
   getUserFromAuth,
   parseBody,
   buildUserState,

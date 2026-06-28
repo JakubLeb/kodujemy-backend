@@ -2,7 +2,7 @@
 // Zwraca: { token, user, activity, savedCodes }
 const { ensureSchema, sql } = require('./utils/db');
 const {
-  json, preflight, parseBody, verifyPassword, newToken, buildUserState,
+  json, preflight, parseBody, verifyPassword, createSession, buildUserState,
 } = require('./utils/helpers');
 
 exports.handler = async (event) => {
@@ -26,8 +26,7 @@ exports.handler = async (event) => {
       return json(401, { error: 'Nieprawidłowy email lub hasło.' });
     }
 
-    const token = newToken();
-    await sql`INSERT INTO sessions (token, user_id) VALUES (${token}, ${user.id})`;
+    const token = await createSession(user.id);
 
     const state = await buildUserState(user);
     return json(200, { token, ...state });

@@ -3,7 +3,7 @@
 const { ensureSchema } = require('./utils/db');
 const { sql } = require('./utils/db');
 const {
-  json, preflight, parseBody, hashPassword, newToken, newId, buildUserState,
+  json, preflight, parseBody, hashPassword, createSession, newId, buildUserState,
 } = require('./utils/helpers');
 
 exports.handler = async (event) => {
@@ -38,8 +38,7 @@ exports.handler = async (event) => {
       RETURNING *`;
     const user = inserted[0];
 
-    const token = newToken();
-    await sql`INSERT INTO sessions (token, user_id) VALUES (${token}, ${user.id})`;
+    const token = await createSession(user.id);
 
     const state = await buildUserState(user);
     return json(200, { token, ...state });

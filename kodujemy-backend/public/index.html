@@ -393,9 +393,70 @@
         .playground-output { flex: 4; min-width: 0; background: var(--bg-tests); color: white; border-left: 1px solid var(--border-editor); display: flex; flex-direction: column; }
         .playground-output-header { padding: 12px 20px; background: #2d2d2d; border-bottom: 1px solid var(--border-editor); font-size: 13px; font-weight: 700; text-transform: uppercase; color: #ccc; }
 
+        /* ====== Układ aplikacji ze stopką ====== */
+        .app-shell { display: flex; flex-direction: column; min-height: 100vh; }
+        .app-main { flex: 1; }
+
+        /* Aktywność bez celu nawigacji nie udaje klikalnej */
+        .activity-item.static { cursor: default; }
+        .activity-item.static:hover { background-color: var(--bg-panel); }
+
+        /* ====== Stopka / pasek copyright ====== */
+        .site-footer { background: var(--bg-panel); border-top: 1px solid var(--border); padding: 22px 30px; }
+        .site-footer-inner { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+        .site-footer-brand { font-weight: 800; color: var(--primary); font-size: 16px; letter-spacing: -0.3px; }
+        .site-footer-copy { font-size: 13px; color: var(--text-muted); }
+        .site-footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
+        .site-footer-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; cursor: pointer; }
+        .site-footer-links a:hover { color: var(--primary); }
+
+        /* ====== Hamburger + menu mobilne ====== */
+        .nav-toggle { display: none; background: none; border: 1px solid var(--border); border-radius: 8px; width: 40px; height: 40px; cursor: pointer; align-items: center; justify-content: center; flex-direction: column; gap: 4px; padding: 0; }
+        .nav-toggle span { display: block; width: 18px; height: 2px; background: var(--text-main); border-radius: 2px; transition: 0.2s; }
+        .mobile-menu { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-panel); border-bottom: 1px solid var(--border); box-shadow: 0 12px 24px rgba(0,0,0,0.08); flex-direction: column; padding: 6px 0; z-index: 150; animation: dropIn 0.15s ease; }
+        .mobile-menu a { padding: 14px 30px; font-size: 16px; color: var(--text-main); text-decoration: none; cursor: pointer; border: none; background: none; text-align: left; width: 100%; }
+        .mobile-menu a.active { color: var(--primary); background: #f5f3ff; font-weight: 600; }
+        .mobile-menu a:hover { background: #f3f4f6; }
+
+        /* ====== Awatar - czytelny wskaźnik rozwijania ====== */
+        .avatar-trigger { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+        .avatar-caret { font-size: 10px; color: var(--text-muted); transition: transform 0.2s; }
+        .avatar-caret.open { transform: rotate(180deg); }
+
+        /* ====== Ranking - bardziej interaktywny ====== */
+        .ranking-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+        .ranking-refresh { background: none; border: 1px solid var(--border); border-radius: 8px; padding: 5px 10px; font-size: 12px; color: var(--text-muted); cursor: pointer; transition: 0.2s; }
+        .ranking-refresh:hover { border-color: var(--primary); color: var(--primary); }
+        .ranking-item { border-radius: 8px; padding: 8px 10px; margin: 0 -10px; border-bottom: none; transition: background 0.15s, transform 0.15s; }
+        .ranking-item:hover { background: #f9fafb; transform: translateX(2px); }
+        .ranking-medal { min-width: 28px; font-weight: 700; font-size: 15px; text-align: center; color: var(--text-muted); }
+        .ranking-item.top1 .ranking-avatar { background: linear-gradient(135deg,#f59e0b,#fbbf24); color: #fff; }
+        .ranking-item.top2 .ranking-avatar { background: linear-gradient(135deg,#94a3b8,#cbd5e1); color: #fff; }
+        .ranking-item.top3 .ranking-avatar { background: linear-gradient(135deg,#b45309,#d97706); color: #fff; }
+        .ranking-bar { height: 4px; border-radius: 2px; background: #eef2ff; margin-top: 5px; overflow: hidden; }
+        .ranking-bar > div { height: 100%; border-radius: 2px; background: linear-gradient(90deg,var(--primary),#8b5cf6); transition: width 0.5s; }
+
+        /* ====== Edytor - przykładowe rozwiązanie ====== */
+        .solution-code { background: var(--bg-editor); color: var(--text-editor); border-radius: 8px; padding: 16px 18px; font-family: ui-monospace,'Cascadia Code','Consolas',monospace; font-size: 13px; line-height: 1.55; white-space: pre; overflow-x: auto; margin-bottom: 14px; }
+        .editor-hint { font-size: 12px; color: #cfcfcf; padding: 8px 20px; background: #1f1f1f; border-bottom: 1px solid var(--border-editor); display: flex; align-items: center; gap: 8px; }
+
+        /* ====== Tło auth - pływające sześciany ====== */
+        .auth-page { position: relative; overflow: hidden; }
+        .auth-bg-cubes { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+        .auth-bg-cubes span { position: absolute; bottom: -120px; display: block; border: 2px solid rgba(99,102,241,0.16); border-radius: 8px; animation: cubeFloat linear infinite; }
+        @keyframes cubeFloat {
+            0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10%  { opacity: 1; }
+            90%  { opacity: 1; }
+            100% { transform: translateY(-115vh) rotate(360deg); opacity: 0; }
+        }
+        .auth-card { position: relative; z-index: 1; }
+
         @media (max-width: 900px) {
             .container { flex-direction: column; padding: 20px; }
             .nav-links { display: none; }
+            .nav-toggle { display: flex; }
+            .mobile-menu.open { display: flex; }
             .workspace { flex-direction: column; }
             .task-pane, .editor-container { width: 100%; }
             .task-pane { max-height: 40vh; }
@@ -403,6 +464,7 @@
             .playground-body { flex-direction: column; }
             .playground-output { border-left: none; border-top: 1px solid var(--border-editor); min-height: 200px; }
             .profile-header { flex-direction: column; text-align: center; }
+            .site-footer-inner { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
@@ -748,6 +810,64 @@ const TASKS = [
 ];
 
 // ============================================================
+// Przykładowe rozwiązania (odblokowywane po rozwiązaniu zadania)
+// ============================================================
+const TASK_SOLUTIONS = {
+    'palindrome-number': `def is_palindrome(n: int) -> bool:
+    if n < 0:
+        return False
+    s = str(n)
+    return s == s[::-1]`,
+    'sum-array': `def sum_array(arr):
+    total = 0
+    for x in arr:
+        total += x
+    return total`,
+    'reverse-string': `def reverse_string(s):
+    return s[::-1]`,
+    'fizzbuzz': `def fizzbuzz(n):
+    wynik = []
+    for i in range(1, n + 1):
+        if i % 15 == 0:
+            wynik.append("FizzBuzz")
+        elif i % 3 == 0:
+            wynik.append("Fizz")
+        elif i % 5 == 0:
+            wynik.append("Buzz")
+        else:
+            wynik.append(str(i))
+    return wynik`,
+    'factorial': `def factorial(n):
+    wynik = 1
+    for i in range(2, n + 1):
+        wynik *= i
+    return wynik`,
+    'fibonacci': `def fib(n):
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a`,
+    'two-sum': `def two_sum(nums, target):
+    seen = {}
+    for i, x in enumerate(nums):
+        if target - x in seen:
+            return sorted([seen[target - x], i])
+        seen[x] = i
+    return []`,
+    'binary-search': `def binary_search(arr, target):
+    lo, hi = 0, len(arr) - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if arr[mid] == target:
+            return mid
+        if arr[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return -1`,
+};
+
+// ============================================================
 // Globalny Pyodide (ładujemy raz przy starcie)
 // ============================================================
 let pyodideInstance = null;
@@ -787,7 +907,9 @@ function Toast({ toast, onClose }) {
 // ============================================================
 function Navbar({ page, setPage, user, onLogout }) {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [navOpen, setNavOpen] = useState(false); // menu mobilne (hamburger)
     const menuRef = useRef(null);
+    const navRef = useRef(null);
 
     // Zamykaj menu po kliknięciu poza nim
     useEffect(() => {
@@ -799,6 +921,16 @@ function Navbar({ page, setPage, user, onLogout }) {
         return () => document.removeEventListener('mousedown', handler);
     }, [menuOpen]);
 
+    // Zamykaj menu mobilne po kliknięciu poza nim
+    useEffect(() => {
+        if (!navOpen) return;
+        const handler = (e) => {
+            if (navRef.current && !navRef.current.contains(e.target)) setNavOpen(false);
+        };
+        document.addEventListener('mousedown', handler);
+        return () => document.removeEventListener('mousedown', handler);
+    }, [navOpen]);
+
     const links = [
         { id: 'dashboard', label: 'Dashboard' },
         { id: 'tasks', label: 'Zadania' },
@@ -807,9 +939,18 @@ function Navbar({ page, setPage, user, onLogout }) {
     ];
 
     const go = (target) => { setMenuOpen(false); setPage(target); };
+    const goNav = (id) => { setNavOpen(false); setPage({ name: id }); };
 
     return (
-        <header className="navbar">
+        <header className="navbar" ref={navRef}>
+            <button
+                className="nav-toggle"
+                aria-label="Menu"
+                aria-expanded={navOpen}
+                onClick={() => setNavOpen(o => !o)}
+            >
+                <span></span><span></span><span></span>
+            </button>
             <div className="logo" onClick={() => setPage({ name: 'dashboard' })}>Kodujemy</div>
             <nav className="nav-links">
                 {links.map(l => (
@@ -818,12 +959,22 @@ function Navbar({ page, setPage, user, onLogout }) {
                     </a>
                 ))}
             </nav>
+            <div className={`mobile-menu ${navOpen ? 'open' : ''}`}>
+                {links.map(l => (
+                    <a key={l.id} className={page.name === l.id ? 'active' : ''} onClick={() => goNav(l.id)}>
+                        {l.label}
+                    </a>
+                ))}
+            </div>
             <div className="user-panel">
                 <div className="badge">🔥 {user.streak} dni</div>
                 <div className="badge badge-xp">⭐ {user.xp} XP</div>
                 <div className="avatar-wrapper" ref={menuRef}>
-                    <div className="avatar" onClick={() => setMenuOpen(o => !o)} title="Otwórz menu profilu">
-                        {user.name[0]?.toUpperCase() || '?'}
+                    <div className="avatar-trigger" onClick={() => setMenuOpen(o => !o)} title="Otwórz menu profilu">
+                        <div className="avatar">
+                            {user.name[0]?.toUpperCase() || '?'}
+                        </div>
+                        <span className={`avatar-caret ${menuOpen ? 'open' : ''}`}>▼</span>
                     </div>
                     {menuOpen && (
                         <div className="avatar-menu">
@@ -854,14 +1005,18 @@ function Navbar({ page, setPage, user, onLogout }) {
 function LeaderboardWidget({ userId }) {
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
+    const [reloadKey, setReloadKey] = useState(0);
+    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
         let cancelled = false;
+        if (reloadKey > 0) setRefreshing(true);
         API.leaderboard(10)
-            .then(d => { if (!cancelled) setData(d); })
-            .catch(e => { if (!cancelled) setError(e.message); });
+            .then(d => { if (!cancelled) { setData(d); setError(null); } })
+            .catch(e => { if (!cancelled) setError(e.message); })
+            .finally(() => { if (!cancelled) setRefreshing(false); });
         return () => { cancelled = true; };
-    }, []);
+    }, [reloadKey]);
 
     if (error) {
         return (
@@ -888,21 +1043,36 @@ function LeaderboardWidget({ userId }) {
     }
 
     const meInTop = data.leaderboard.some(p => p.id === userId);
+    const topXp = Math.max(1, ...data.leaderboard.map(p => p.xp || 0));
 
     return (
         <>
+            <div className="ranking-head">
+                <span style={{fontSize:'12px', color:'var(--text-muted)'}}>Top {data.leaderboard.length} graczy</span>
+                <button
+                    className="ranking-refresh"
+                    onClick={() => setReloadKey(k => k + 1)}
+                    disabled={refreshing}
+                    title="Odśwież ranking"
+                >
+                    {refreshing ? '⏳' : '⟳'} Odśwież
+                </button>
+            </div>
             <div className="ranking-list">
                 {data.leaderboard.map(p => {
                     const isMe = p.id === userId;
                     const medal = p.rank === 1 ? '🥇' : p.rank === 2 ? '🥈' : p.rank === 3 ? '🥉' : `#${p.rank}`;
                     const initials = (p.name || '?').trim().slice(0, 2).toUpperCase();
+                    const topClass = p.rank <= 3 ? ` top${p.rank}` : '';
+                    const barPct = Math.round(((p.xp || 0) / topXp) * 100);
                     return (
-                        <div className="ranking-item" key={p.id} style={isMe ? {background:'#eef2ff', margin:'-6px -10px', padding:'10px', borderRadius:'8px', borderBottom:'none'} : {}}>
-                            <div style={{minWidth:'28px', fontWeight:700, color:'var(--text-muted)', fontSize:'14px'}}>{medal}</div>
+                        <div className={`ranking-item${topClass}`} key={p.id} style={isMe ? {background:'#eef2ff'} : {}}>
+                            <div className="ranking-medal">{medal}</div>
                             <div className="ranking-avatar" style={isMe ? {background:'var(--primary)'} : {}}>{initials}</div>
                             <div className="ranking-info" style={{flex:1}}>
                                 <div className="ranking-name">{p.name}{isMe && ' (Ty)'}</div>
                                 <div className="ranking-points">{p.xp} XP • {p.solvedCount} zad.</div>
+                                <div className="ranking-bar"><div style={{width: barPct + '%'}}></div></div>
                             </div>
                         </div>
                     );
@@ -967,7 +1137,9 @@ function Dashboard({ setPage, user, activity }) {
                 ) : (
                     <div className="activity-list">
                         {activity.slice(0, 5).map((a, i) => (
-                            <div className="activity-item" key={i} onClick={() => a.taskId && setPage({ name: 'editor', taskId: a.taskId })}>
+                            <div className={`activity-item ${a.taskId ? '' : 'static'}`} key={i}
+                                onClick={() => a.taskId && setPage({ name: 'editor', taskId: a.taskId })}
+                                title={a.taskId ? 'Otwórz zadanie' : undefined}>
                                 <div className="activity-left">
                                     <div className="activity-icon">{a.icon || 'Py'}</div>
                                     <div className="activity-text">
@@ -1284,7 +1456,7 @@ function highlightPython(src) {
 // ============================================================
 // EDYTOR - rozwiązywanie zadania
 // ============================================================
-function EditorPage({ taskId, setPage, solveTask, savedCode, saveCode }) {
+function EditorPage({ taskId, setPage, solveTask, savedCode, saveCode, isSolved }) {
     const task = TASKS.find(t => t.id === taskId);
     const [code, setCode] = useState(savedCode || task?.starterCode || '');
     const [tab, setTab] = useState('task');
@@ -1443,7 +1615,6 @@ if '${task.funcName}' in globals():
                     <div className="tabs">
                         <button className={`tab ${tab === 'task' ? 'active' : ''}`} onClick={() => setTab('task')}>Treść zadania</button>
                         <button className={`tab ${tab === 'solution' ? 'active' : ''}`} onClick={() => setTab('solution')}>Rozwiązanie</button>
-                        <button className={`tab ${tab === 'discussion' ? 'active' : ''}`} onClick={() => setTab('discussion')}>Dyskusja</button>
                     </div>
                     <div className="task-content">
                         <a className="back-link" onClick={() => setPage({ name: 'tasks' })}>← Wszystkie zadania</a>
@@ -1469,16 +1640,19 @@ if '${task.funcName}' in globals():
                             </>
                         )}
                         {tab === 'solution' && (
-                            <div className="empty-state">
-                                <div className="empty-state-icon">🔒</div>
-                                <div>Rozwiąż zadanie, aby zobaczyć przykładowe rozwiązanie.</div>
-                            </div>
-                        )}
-                        {tab === 'discussion' && (
-                            <div className="empty-state">
-                                <div className="empty-state-icon">💬</div>
-                                <div>Brak postów w dyskusji. Bądź pierwszy!</div>
-                            </div>
+                            isSolved && TASK_SOLUTIONS[task.id] ? (
+                                <>
+                                    <h1 style={{fontSize:'20px'}}>Przykładowe rozwiązanie</h1>
+                                    <p>To jedno z możliwych poprawnych rozwiązań. Twój własny kod może wyglądać inaczej — liczy się, że przechodzi wszystkie testy.</p>
+                                    <div className="solution-code"
+                                        dangerouslySetInnerHTML={{ __html: highlightPython(TASK_SOLUTIONS[task.id]) }} />
+                                </>
+                            ) : (
+                                <div className="empty-state">
+                                    <div className="empty-state-icon">🔒</div>
+                                    <div>Rozwiąż zadanie (zgłoś poprawny kod), aby odblokować przykładowe rozwiązanie.</div>
+                                </div>
+                            )
                         )}
                     </div>
                 </div>
@@ -1500,6 +1674,10 @@ if '${task.funcName}' in globals():
                                 Zgłoś rozwiązanie
                             </button>
                         </div>
+                    </div>
+
+                    <div className="editor-hint">
+                        🐍 Piszesz w <strong style={{margin:'0 4px'}}>Pythonie 3</strong> — uzupełnij funkcję, kliknij <strong style={{margin:'0 4px'}}>▶ Uruchom</strong>, aby sprawdzić testy, a potem <strong style={{margin:'0 4px'}}>Zgłoś rozwiązanie</strong>, by zdobyć XP.
                     </div>
 
                     <div className="code-area">
@@ -1607,6 +1785,7 @@ function LoginPage({ onLogin, switchToRegister }) {
 
     return (
         <div className="auth-page">
+            <AuthBackground />
             <div className="auth-card">
                 <div className="auth-logo">Kodujemy</div>
                 <p className="auth-tagline">Naucz się programować przez praktykę</p>
@@ -1636,6 +1815,9 @@ function LoginPage({ onLogin, switchToRegister }) {
                 <div className="auth-divider">lub</div>
                 <p className="auth-switch">
                     Nie masz konta? <a onClick={switchToRegister}>Załóż je</a>
+                </p>
+                <p className="site-footer-copy" style={{textAlign:'center', marginTop:'22px'}}>
+                    © {new Date().getFullYear()} Kodujemy. Wszelkie prawa zastrzeżone.
                 </p>
             </div>
         </div>
@@ -1692,6 +1874,7 @@ function RegisterPage({ onLogin, switchToLogin }) {
 
     return (
         <div className="auth-page">
+            <AuthBackground />
             <div className="auth-card">
                 <div className="auth-logo">Kodujemy</div>
                 <p className="auth-tagline">Naucz się programować przez praktykę</p>
@@ -1741,6 +1924,9 @@ function RegisterPage({ onLogin, switchToLogin }) {
                 <div className="auth-divider">lub</div>
                 <p className="auth-switch">
                     Masz już konto? <a onClick={switchToLogin}>Zaloguj się</a>
+                </p>
+                <p className="site-footer-copy" style={{textAlign:'center', marginTop:'22px'}}>
+                    © {new Date().getFullYear()} Kodujemy. Wszelkie prawa zastrzeżone.
                 </p>
             </div>
         </div>
@@ -1871,7 +2057,9 @@ function ProfilePage({ user, activity, setPage }) {
             ) : (
                 <div className="activity-list">
                     {activity.slice(0, 10).map((a, i) => (
-                        <div className="activity-item" key={i} onClick={() => a.taskId && setPage({ name: 'editor', taskId: a.taskId })}>
+                        <div className={`activity-item ${a.taskId ? '' : 'static'}`} key={i}
+                            onClick={() => a.taskId && setPage({ name: 'editor', taskId: a.taskId })}
+                            title={a.taskId ? 'Otwórz zadanie' : undefined}>
                             <div className="activity-left">
                                 <div className="activity-icon">{a.icon || 'Py'}</div>
                                 <div className="activity-text">
@@ -2067,6 +2255,56 @@ sys.stderr = _stdout_buf
 }
 
 // ============================================================
+// Stopka / pasek copyright
+// ============================================================
+function Footer({ setPage }) {
+    const year = new Date().getFullYear();
+    return (
+        <footer className="site-footer">
+            <div className="site-footer-inner">
+                <div>
+                    <span className="site-footer-brand">Kodujemy</span>
+                    <span className="site-footer-copy" style={{marginLeft:'10px'}}>
+                        © {year} Kodujemy. Wszelkie prawa zastrzeżone.
+                    </span>
+                </div>
+                <nav className="site-footer-links">
+                    <a onClick={() => setPage && setPage({ name: 'tasks' })}>Zadania</a>
+                    <a onClick={() => setPage && setPage({ name: 'courses' })}>Kursy</a>
+                    <a onClick={() => setPage && setPage({ name: 'playground' })}>Edytor kodu</a>
+                </nav>
+            </div>
+        </footer>
+    );
+}
+
+// Tło logowania/rejestracji - pływające sześciany (efekt dekoracyjny).
+function AuthBackground() {
+    const cubes = [
+        { left: '8%',  size: 70,  dur: 16, delay: 0 },
+        { left: '22%', size: 36,  dur: 12, delay: 2 },
+        { left: '40%', size: 100, dur: 20, delay: 4 },
+        { left: '58%', size: 50,  dur: 14, delay: 1 },
+        { left: '72%', size: 28,  dur: 11, delay: 6 },
+        { left: '85%', size: 80,  dur: 18, delay: 3 },
+        { left: '92%', size: 44,  dur: 13, delay: 5 },
+    ];
+    return (
+        <div className="auth-bg-cubes" aria-hidden="true">
+            {cubes.map((c, i) => (
+                <span key={i} style={{
+                    left: c.left,
+                    width: c.size + 'px',
+                    height: c.size + 'px',
+                    animationDuration: c.dur + 's',
+                    animationDelay: c.delay + 's',
+                }}></span>
+            ))}
+        </div>
+    );
+}
+
+// ============================================================
 // APP - root
 // ============================================================
 function App() {
@@ -2255,27 +2493,34 @@ function App() {
         );
     }
 
+    // Edytor i playground są pełnoekranowe - tam stopka tylko psułaby layout.
+    const showFooter = page.name !== 'editor' && page.name !== 'playground';
+
     return (
-        <>
+        <div className="app-shell">
             <Navbar page={page} setPage={setPage} user={user} onLogout={handleLogout} />
-            {page.name === 'dashboard' && <Dashboard setPage={setPage} user={user} activity={activity} />}
-            {page.name === 'tasks' && <TasksPage setPage={setPage} solvedIds={solvedIds} />}
-            {page.name === 'courses' && <CoursesPage setPage={setPage} user={user} />}
-            {page.name === 'course' && <CourseDetail courseId={page.id} setPage={setPage} user={user} completeLesson={completeLesson} />}
-            {page.name === 'editor' && <EditorPage
-                taskId={page.taskId}
-                setPage={setPage}
-                solveTask={solveTask}
-                savedCode={savedCodes[page.taskId]}
-                saveCode={saveCode}
-            />}
-            {page.name === 'playground' && <PlaygroundPage
-                playgroundCode={playgroundCode}
-                setPlaygroundCode={setPlaygroundCode}
-            />}
-            {page.name === 'profile' && <ProfilePage user={user} activity={activity} setPage={setPage} />}
+            <main className="app-main">
+                {page.name === 'dashboard' && <Dashboard setPage={setPage} user={user} activity={activity} />}
+                {page.name === 'tasks' && <TasksPage setPage={setPage} solvedIds={solvedIds} />}
+                {page.name === 'courses' && <CoursesPage setPage={setPage} user={user} />}
+                {page.name === 'course' && <CourseDetail courseId={page.id} setPage={setPage} user={user} completeLesson={completeLesson} />}
+                {page.name === 'editor' && <EditorPage
+                    taskId={page.taskId}
+                    setPage={setPage}
+                    solveTask={solveTask}
+                    savedCode={savedCodes[page.taskId]}
+                    saveCode={saveCode}
+                    isSolved={solvedIds.has(page.taskId)}
+                />}
+                {page.name === 'playground' && <PlaygroundPage
+                    playgroundCode={playgroundCode}
+                    setPlaygroundCode={setPlaygroundCode}
+                />}
+                {page.name === 'profile' && <ProfilePage user={user} activity={activity} setPage={setPage} />}
+            </main>
+            {showFooter && <Footer setPage={setPage} />}
             <Toast toast={toast} onClose={() => setToast(null)} />
-        </>
+        </div>
     );
 }
 

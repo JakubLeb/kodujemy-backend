@@ -33,6 +33,11 @@ function ensureSchema() {
           user_id    TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
           created_at TIMESTAMPTZ NOT NULL DEFAULT now()
         )`;
+      // Wygasanie sesji - kolumna dodawana migracyjnie (istniejące tabele też ją dostaną).
+      await sql`ALTER TABLE sessions ADD COLUMN IF NOT EXISTS expires_at TIMESTAMPTZ`;
+      // Uzupełnij brakujące daty wygaśnięcia dla sesji sprzed wprowadzenia tej kolumny.
+      await sql`UPDATE sessions SET expires_at = created_at + INTERVAL '30 days' WHERE expires_at IS NULL`;
+      await sql`CREATE INDEX IF NOT EXISTS idx_sessions_expires ON sessions(expires_at)`;
       // Rozwiązane zadania (jedno na parę user+task).
       await sql`
         CREATE TABLE IF NOT EXISTS solved_tasks (

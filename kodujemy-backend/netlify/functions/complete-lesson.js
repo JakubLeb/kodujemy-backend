@@ -1,5 +1,3 @@
-// POST /api/complete-lesson  { courseId, lessonId, lessonName, courseTitle, xp }  (Bearer)
-// Zwraca albo { alreadyCompleted: true }  albo  { newXp, activityItem }
 const { ensureSchema, sql } = require('./utils/db');
 const {
   json, preflight, parseBody, getUserFromAuth, activityRowToItem,

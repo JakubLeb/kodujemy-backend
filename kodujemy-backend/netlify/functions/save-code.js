@@ -1,5 +1,3 @@
-// POST /api/save-code  { taskId, code }  (Bearer)
-// Upsert kodu dla zadania. Zwraca { ok: true }.
 const { ensureSchema, sql } = require('./utils/db');
 const { json, preflight, parseBody, getUserFromAuth } = require('./utils/helpers');
 

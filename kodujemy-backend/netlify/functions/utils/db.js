@@ -1,17 +1,11 @@
-// Połączenie z bazą Neon (PostgreSQL) przez sterownik serverless.
-// Connection string trzymamy WYŁĄCZNIE w zmiennej środowiskowej DATABASE_URL
-// (panel Netlify -> Site settings -> Environment variables). Nigdy w kodzie.
 const { neon } = require('@neondatabase/serverless');
 
 if (!process.env.DATABASE_URL) {
-  // Rzucamy czytelny błąd zamiast cichego "undefined" przy starcie funkcji.
   console.error('Brak zmiennej DATABASE_URL!');
 }
 
 const sql = neon(process.env.DATABASE_URL);
 
-// Jednorazowa inicjalizacja schematu. Wołana leniwie przy pierwszym żądaniu.
-// `CREATE TABLE IF NOT EXISTS` jest idempotentne, więc bezpieczne na produkcji.
 let schemaReady = null;
 function ensureSchema() {
   if (!schemaReady) {
@@ -33,12 +27,9 @@ function ensureSchema() {
           user_id    TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
           created_at TIMESTAMPTZ NOT NULL DEFAULT now()
         )`;
-      // Wygasanie sesji - kolumna dodawana migracyjnie (istniejące tabele też ją dostaną).
       await sql`ALTER TABLE sessions ADD COLUMN IF NOT EXISTS expires_at TIMESTAMPTZ`;
-      // Uzupełnij brakujące daty wygaśnięcia dla sesji sprzed wprowadzenia tej kolumny.
       await sql`UPDATE sessions SET expires_at = created_at + INTERVAL '30 days' WHERE expires_at IS NULL`;
       await sql`CREATE INDEX IF NOT EXISTS idx_sessions_expires ON sessions(expires_at)`;
-      // Rozwiązane zadania (jedno na parę user+task).
       await sql`
         CREATE TABLE IF NOT EXISTS solved_tasks (
           user_id   TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -46,7 +37,6 @@ function ensureSchema() {
           solved_at TIMESTAMPTZ NOT NULL DEFAULT now(),
           PRIMARY KEY (user_id, task_id)
         )`;
-      // Ukończone lekcje.
       await sql`
         CREATE TABLE IF NOT EXISTS completed_lessons (
           user_id      TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -55,7 +45,6 @@ function ensureSchema() {
           completed_at TIMESTAMPTZ NOT NULL DEFAULT now(),
           PRIMARY KEY (user_id, lesson_id)
         )`;
-      // Zapisany kod do zadań (jeden wpis na parę user+task).
       await sql`
         CREATE TABLE IF NOT EXISTS saved_codes (
           user_id    TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -64,7 +53,6 @@ function ensureSchema() {
           updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
           PRIMARY KEY (user_id, task_id)
         )`;
-      // Log aktywności (do dashboardu i profilu).
       await sql`
         CREATE TABLE IF NOT EXISTS activity (
           id         BIGSERIAL PRIMARY KEY,

@@ -1,5 +1,3 @@
-// POST /api/auth/register  { name, email, password }
-// Zwraca: { token, user, activity, savedCodes }
 const { ensureSchema } = require('./utils/db');
 const { sql } = require('./utils/db');
 const {

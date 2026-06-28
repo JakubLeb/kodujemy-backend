@@ -1,5 +1,3 @@
-// GET /api/leaderboard?limit=10   (Bearer opcjonalny, ale frontend wysyła auth:true)
-// Zwraca { leaderboard: [{ id, name, xp, solvedCount, rank }], me?: {...} }
 const { ensureSchema, sql } = require('./utils/db');
 const { json, preflight, getUserFromAuth } = require('./utils/helpers');
 
@@ -16,8 +14,6 @@ exports.handler = async (event) => {
     );
     const limit = Math.max(1, Math.min(100, limitRaw || 10));
 
-    // Ranking: users posortowani po XP malejąco, z liczbą rozwiązanych zadań.
-    // rank liczony okienkowo (ROW_NUMBER) po całej tabeli, potem ucinamy do limitu.
     const top = await sql`
       WITH ranked AS (
         SELECT
@@ -45,7 +41,6 @@ exports.handler = async (event) => {
 
     const result = { leaderboard };
 
-    // Jeśli zalogowany i nie ma go w top-N, dołącz jego pozycję jako `me`.
     const user = await getUserFromAuth(event);
     if (user) {
       const inTop = leaderboard.some((p) => p.id === user.id);

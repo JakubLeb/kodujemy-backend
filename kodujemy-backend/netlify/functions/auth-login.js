@@ -1,5 +1,3 @@
-// POST /api/auth/login  { email, password }
-// Zwraca: { token, user, activity, savedCodes }
 const { ensureSchema, sql } = require('./utils/db');
 const {
   json, preflight, parseBody, verifyPassword, createSession, buildUserState,
@@ -21,7 +19,6 @@ exports.handler = async (event) => {
     const rows = await sql`SELECT * FROM users WHERE email = ${emailNorm} LIMIT 1`;
     const user = rows[0];
 
-    // Ten sam komunikat dla "brak usera" i "złe hasło" - nie zdradzamy, czy email istnieje.
     if (!user || !verifyPassword(password, user.password_hash)) {
       return json(401, { error: 'Nieprawidłowy email lub hasło.' });
     }

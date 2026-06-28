@@ -1,5 +1,3 @@
-// POST /api/save-playground  { code }  (Bearer)
-// Zapisuje kod z playgrounda na koncie usera. Zwraca { ok: true }.
 const { ensureSchema, sql } = require('./utils/db');
 const { json, preflight, parseBody, getUserFromAuth } = require('./utils/helpers');
 

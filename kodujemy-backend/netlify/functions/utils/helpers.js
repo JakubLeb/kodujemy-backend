@@ -1,10 +1,6 @@
-// Wspólne narzędzia używane przez wszystkie funkcje.
 const crypto = require('crypto');
 const { sql } = require('./db');
 
-// --- Odpowiedzi JSON + CORS ---
-// CORS jest tu właściwie zbędny (front i API na tej samej domenie Netlify),
-// ale nie szkodzi i ułatwia testy lokalne.
 const CORS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
@@ -19,7 +15,6 @@ function json(statusCode, body) {
   };
 }
 
-// Obsługa preflightu OPTIONS - zwróć z każdej funkcji na początku.
 function preflight(event) {
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 204, headers: CORS, body: '' };
@@ -27,9 +22,6 @@ function preflight(event) {
   return null;
 }
 
-// --- Hasła ---
-// scrypt z modułu crypto (wbudowany w Node) - bez zależności zewnętrznych.
-// Format przechowywania: "salt:hash" (hex).
 function hashPassword(password) {
   const salt = crypto.randomBytes(16).toString('hex');
   const hash = crypto.scryptSync(password, salt, 64).toString('hex');
@@ -40,15 +32,11 @@ function verifyPassword(password, stored) {
   const [salt, hash] = String(stored).split(':');
   if (!salt || !hash) return false;
   const candidate = crypto.scryptSync(password, salt, 64).toString('hex');
-  // Porównanie w stałym czasie.
   const a = Buffer.from(hash, 'hex');
   const b = Buffer.from(candidate, 'hex');
   return a.length === b.length && crypto.timingSafeEqual(a, b);
 }
 
-// --- Tokeny / sesje ---
-// Prosty, nieprzewidywalny token sesji zapisywany w tabeli `sessions`.
-// (Świadomie nie JWT - mniej rzeczy do pomylenia, łatwe unieważnianie.)
 function newToken() {
   return crypto.randomBytes(32).toString('hex');
 }
@@ -57,10 +45,8 @@ function newId(prefix = 'u') {
   return prefix + '_' + crypto.randomBytes(12).toString('hex');
 }
 
-// Czas życia sesji - po tym okresie token wygasa i trzeba zalogować się ponownie.
 const SESSION_TTL_DAYS = 30;
 
-// Tworzy nową sesję z datą wygaśnięcia i zwraca token.
 async function createSession(userId) {
   const token = newToken();
   await sql`
@@ -69,9 +55,6 @@ async function createSession(userId) {
   return token;
 }
 
-// Wyciąga usera na podstawie nagłówka Authorization: Bearer <token>.
-// Honoruje wygasanie sesji - wygasły token traktujemy jak brak sesji.
-// Zwraca obiekt usera (z bazy) albo null.
 async function getUserFromAuth(event) {
   const header =
     event.headers.authorization || event.headers.Authorization || '';
@@ -85,12 +68,10 @@ async function getUserFromAuth(event) {
       AND (s.expires_at IS NULL OR s.expires_at > now())
     LIMIT 1`;
   if (rows[0]) return rows[0];
-  // Best-effort sprzątanie: usuń wygasły token (nie blokuj odpowiedzi, gdy się nie uda).
   sql`DELETE FROM sessions WHERE token = ${token} AND expires_at <= now()`.catch(() => {});
   return null;
 }
 
-// Parsuje body żądania jako JSON (bezpiecznie).
 function parseBody(event) {
   if (!event.body) return {};
   try {
@@ -100,12 +81,6 @@ function parseBody(event) {
   }
 }
 
-// --- Budowanie pełnego stanu użytkownika dla frontendu ---
-// Frontend (applyLoadedState) oczekuje kształtu:
-//   { user: { id, name, email, xp, streak, solvedTasks[], completedLessons[],
-//             coursesProgress{}, playgroundCode },
-//     activity: [ { icon, title, subtitle, xp, taskId, timestamp } ],
-//     savedCodes: { [taskId]: code } }
 async function buildUserState(user) {
   const [solved, lessons, codes, acts] = await Promise.all([
     sql`SELECT task_id FROM solved_tasks WHERE user_id = ${user.id}`,
@@ -141,7 +116,6 @@ async function buildUserState(user) {
   };
 }
 
-// Mapuje wiersz z tabeli activity na obiekt oczekiwany przez frontend.
 function activityRowToItem(row) {
   return {
     icon: row.icon,
@@ -149,7 +123,7 @@ function activityRowToItem(row) {
     subtitle: row.subtitle,
     xp: row.xp,
     taskId: row.task_id || undefined,
-    timestamp: row.created_at, // ISO string; frontend ma formatTime()
+    timestamp: row.created_at,
   };
 }
 

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4bc6e10a-8f02-4586-bd84-0158724c2f75" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/kodujemy-backend.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kodujemy-backend/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/auth-login.js" beforeDir="false" afterPath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/auth-login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/auth-logout.js" beforeDir="false" afterPath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/auth-logout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/auth-register.js" beforeDir="false" afterPath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/auth-register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/auth-session.js" beforeDir="false" afterPath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/auth-session.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/complete-lesson.js" beforeDir="false" afterPath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/complete-lesson.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/leaderboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/leaderboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/save-code.js" beforeDir="false" afterPath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/save-code.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/save-playground.js" beforeDir="false" afterPath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/save-playground.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/solve-task.js" beforeDir="false" afterPath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/solve-task.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/utils/db.js" beforeDir="false" afterPath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/utils/db.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/utils/helpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/utils/helpers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kodujemy-backend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/kodujemy-backend/public/index.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;JakubLeb&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/JakubLeb/kodujemy-backend.git&quot;,
+    &quot;accountId&quot;: &quot;e3db1464-1849-4845-a24d-ecb78edcbd5b&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="3FlBqzfcUP6LZEMbGhfGg6reJ2s" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "fix/tester-feedback",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "C:/Users/nazwi/Downloads/kodujemy-backend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.web.browsers",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-WS-252.27397.92" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4bc6e10a-8f02-4586-bd84-0158724c2f75" name="Changes" comment="" />
+      <created>1782639970917</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1782639970917</updated>
+      <workItem from="1782639972329" duration="1163000" />
+      <workItem from="1782671417690" duration="2308000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

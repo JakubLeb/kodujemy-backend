@@ -1,5 +1,3 @@
-// POST /api/auth/logout   (wymaga Bearer token)
-// Usuwa bieżącą sesję z bazy. Zwraca { ok: true } nawet jeśli token był już nieważny.
 const { ensureSchema, sql } = require('./utils/db');
 const { json, preflight } = require('./utils/helpers');
 
@@ -19,7 +17,6 @@ exports.handler = async (event) => {
     return json(200, { ok: true });
   } catch (e) {
     console.error('logout error:', e);
-    // Wylogowanie i tak ma się "udać" z punktu widzenia UI.
     return json(200, { ok: true });
   }
 };

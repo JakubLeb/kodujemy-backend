@@ -1,5 +1,3 @@
-// POST /api/solve-task  { taskId, title, category, xp }   (Bearer)
-// Zwraca albo { alreadySolved: true }  albo  { newXp, activityItem }
 const { ensureSchema, sql } = require('./utils/db');
 const {
   json, preflight, parseBody, getUserFromAuth, activityRowToItem,
@@ -18,10 +16,8 @@ exports.handler = async (event) => {
     const { taskId, title, category, xp } = parseBody(event);
     if (!taskId) return json(400, { error: 'Brak taskId.' });
 
-    // Walidacja XP po stronie serwera - nie ufamy wartości z klienta bez ograniczeń.
     const xpAward = Math.max(0, Math.min(1000, parseInt(xp, 10) || 0));
 
-    // Próba wstawienia. Jeśli już istnieje (PK user+task) - nic nie rób.
     const ins = await sql`
       INSERT INTO solved_tasks (user_id, task_id)
       VALUES (${user.id}, ${taskId})
@@ -29,11 +25,9 @@ exports.handler = async (event) => {
       RETURNING task_id`;
 
     if (ins.length === 0) {
-      // Zadanie już było rozwiązane wcześniej.
       return json(200, { alreadySolved: true });
     }
 
-    // Naliczamy XP atomowo i pobieramy nową wartość.
     const upd = await sql`
       UPDATE users SET xp = xp + ${xpAward} WHERE id = ${user.id}
       RETURNING xp`;

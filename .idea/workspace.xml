@@ -4,25 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bc6e10a-8f02-4586-bd84-0158724c2f75" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/kodujemy-backend.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/kodujemy-backend/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/auth-login.js" beforeDir="false" afterPath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/auth-login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/auth-logout.js" beforeDir="false" afterPath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/auth-logout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/auth-register.js" beforeDir="false" afterPath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/auth-register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/auth-session.js" beforeDir="false" afterPath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/auth-session.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/complete-lesson.js" beforeDir="false" afterPath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/complete-lesson.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/leaderboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/leaderboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/save-code.js" beforeDir="false" afterPath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/save-code.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/save-playground.js" beforeDir="false" afterPath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/save-playground.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/solve-task.js" beforeDir="false" afterPath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/solve-task.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/utils/db.js" beforeDir="false" afterPath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/utils/db.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/utils/helpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/kodujemy-backend/netlify/functions/utils/helpers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kodujemy-backend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/kodujemy-backend/public/index.html" afterDir="false" />
-    </list>
+    <list default="true" id="4bc6e10a-8f02-4586-bd84-0158724c2f75" name="Changes" comment="Ostatnie naprawy aplikacji" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,24 +33,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "fix/tester-feedback",
-    "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "C:/Users/nazwi/Downloads/kodujemy-backend",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settings.ide.settings.web.browsers",
-    "to.speed.mode.migration.done": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;fix/tester-feedback&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/nazwi/Downloads/kodujemy-backend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.web.browsers&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -84,11 +66,32 @@
       <option name="presentableId" value="Default" />
       <updated>1782639970917</updated>
       <workItem from="1782639972329" duration="1163000" />
-      <workItem from="1782671417690" duration="2308000" />
+      <workItem from="1782671417690" duration="2384000" />
     </task>
+    <task id="LOCAL-00001" summary="Ostatnie naprawy aplikacji">
+      <option name="closed" value="true" />
+      <created>1782674441839</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1782674441839</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Ostatnie naprawy aplikacji">
+      <option name="closed" value="true" />
+      <created>1782674460780</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1782674460780</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Ostatnie naprawy aplikacji" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ostatnie naprawy aplikacji" />
   </component>
 </project>

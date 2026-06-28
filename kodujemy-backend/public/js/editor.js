@@ -6,6 +6,7 @@ function EditorPage({ taskId, setPage, solveTask, savedCode, saveCode, isSolved 
     const [testResults, setTestResults] = useState([]);
     const [consoleMsgs, setConsoleMsgs] = useState([]);
     const [running, setRunning] = useState(false);
+    const [readyToSubmit, setReadyToSubmit] = useState(false);
     const [pyodideReady, setPyodideReady] = useState(!!pyodideInstance);
     const [pyodideLoading, setPyodideLoading] = useState(false);
     const codeRef = useRef(code);
@@ -13,7 +14,7 @@ function EditorPage({ taskId, setPage, solveTask, savedCode, saveCode, isSolved 
     const textareaRef = useRef(null);
     const highlightRef = useRef(null);
 
-    useEffect(() => { codeRef.current = code; }, [code]);
+    useEffect(() => { codeRef.current = code; setReadyToSubmit(false); }, [code]);
 
     useEffect(() => {
         if (!task) return;
@@ -127,12 +128,20 @@ if '${task.funcName}' in globals():
                 }
             }
             setTestResults(results);
-            setConsoleMsgs(consoleOut);
 
             if (submit && allPassed) {
+                setConsoleMsgs(consoleOut);
+                setReadyToSubmit(false);
                 solveTask(task);
             } else if (submit && !allPassed) {
+                setReadyToSubmit(false);
                 setConsoleMsgs([...consoleOut, { type: 'error', text: 'Nie wszystkie testy przeszły. Popraw kod i spróbuj ponownie.' }]);
+            } else if (!submit && allPassed) {
+                setReadyToSubmit(true);
+                setConsoleMsgs([...consoleOut, { type: 'cta', text: isSolved ? 'Wszystkie testy przeszły! Kliknij „Zgłoś rozwiązanie”, aby ponownie zaliczyć zadanie.' : 'Wszystkie testy przeszły! Teraz kliknij „Zgłoś rozwiązanie”, aby zaliczyć zadanie i zdobyć XP.' }]);
+            } else {
+                setReadyToSubmit(false);
+                setConsoleMsgs(consoleOut);
             }
         } catch (e) {
             setConsoleMsgs([{ type: 'error', text: 'Nieoczekiwany błąd: ' + e.message }]);
@@ -205,8 +214,8 @@ if '${task.funcName}' in globals():
                             <button className="btn-run" onClick={() => runCode(false)} disabled={!pyodideReady || running}>
                                 {running ? 'Uruchamiam...' : '▶ Uruchom'}
                             </button>
-                            <button className="btn-submit" onClick={() => runCode(true)} disabled={!pyodideReady || running}>
-                                Zgłoś rozwiązanie
+                            <button className={`btn-submit ${readyToSubmit ? 'ready' : ''}`} onClick={() => runCode(true)} disabled={!pyodideReady || running}>
+                                📤 Zgłoś rozwiązanie
                             </button>
                         </div>
                     </div>
@@ -256,6 +265,12 @@ if '${task.funcName}' in globals():
                             {consoleMsgs.length === 0 ? (
                                 <div className="console-empty">Naciśnij ▶ Uruchom, aby przetestować swój kod.</div>
                             ) : consoleMsgs.map((m, i) => (
+                                m.type === 'cta' ? (
+                                    <div className="console-cta" key={i}>
+                                        <span className="console-cta-icon">🎉</span>
+                                        <span>{m.text}</span>
+                                    </div>
+                                ) : (
                                 <div className="console-line" key={i}>
                                     {m.type === 'pass' && <span className="icon-pass">✓</span>}
                                     {m.type === 'fail' && <span className="icon-fail">✕</span>}
@@ -266,6 +281,7 @@ if '${task.funcName}' in globals():
                                         <span>{m.text}</span>
                                     )}
                                 </div>
+                                )
                             ))}
                         </div>
                     </div>

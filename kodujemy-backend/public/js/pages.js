@@ -20,7 +20,7 @@ function Dashboard({ setPage, user, activity }) {
                                     <div className="stat">Zrobione<span className="stat-val">{done}</span></div>
                                     <div className="stat">Wszystkie<span className="stat-val">{total}</span></div>
                                 </div>
-                                <div className={`circle ${done === 0 ? 'empty' : ''}`}>{pct}%</div>
+                                <div className={`circle ${done === 0 ? 'empty' : ''}`} style={{ '--pct': pct }} title={`${done} z ${total} lekcji`} role="img" aria-label={`Ukończono ${pct}% lekcji (${done} z ${total})`}><span>{pct}%</span></div>
                             </div>
                         );
                     })}

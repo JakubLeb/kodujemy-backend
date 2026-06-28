@@ -1,0 +1,66 @@
+# Konfiguracja Netlify.
+# Zakładamy, że plik index.html (Twój frontend) jest w katalogu `public/`.
+# Jeśli trzymasz go w innym miejscu, zmień `publish` poniżej.
+
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+
+# --- Mapowanie ścieżek /api/* na konkretne funkcje ---
+# Frontend woła np. /api/auth/login, a fizyczna funkcja to auth-login.js.
+# force = true, żeby przekierowanie miało priorytet nad serwowaniem plików.
+
+[[redirects]]
+  from = "/api/auth/register"
+  to = "/.netlify/functions/auth-register"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/auth/login"
+  to = "/.netlify/functions/auth-login"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/auth/session"
+  to = "/.netlify/functions/auth-session"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/auth/logout"
+  to = "/.netlify/functions/auth-logout"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/solve-task"
+  to = "/.netlify/functions/solve-task"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/complete-lesson"
+  to = "/.netlify/functions/complete-lesson"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/save-code"
+  to = "/.netlify/functions/save-code"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/save-playground"
+  to = "/.netlify/functions/save-playground"
+  status = 200
+  force = true
+
+# Leaderboard ma query string (?limit=) - Netlify przekazuje go automatycznie.
+[[redirects]]
+  from = "/api/leaderboard"
+  to = "/.netlify/functions/leaderboard"
+  status = 200
+  force = true

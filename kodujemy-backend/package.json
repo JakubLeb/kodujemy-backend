@@ -1,0 +1,9 @@
+{
+  "name": "kodujemy-backend",
+  "version": "1.0.0",
+  "description": "Netlify Functions + Neon PostgreSQL backend dla aplikacji Kodujemy",
+  "private": true,
+  "dependencies": {
+    "@neondatabase/serverless": "^0.10.4"
+  }
+}

@@ -183,7 +183,8 @@ function App() {
                 {page.name === 'dashboard' && <Dashboard setPage={setPage} user={user} activity={activity} />}
                 {page.name === 'tasks' && <TasksPage setPage={setPage} solvedIds={solvedIds} />}
                 {page.name === 'courses' && <CoursesPage setPage={setPage} user={user} />}
-                {page.name === 'course' && <CourseDetail courseId={page.id} setPage={setPage} user={user} completeLesson={completeLesson} />}
+                {page.name === 'course' && <CourseDetail courseId={page.id} setPage={setPage} user={user} />}
+                {page.name === 'lesson' && <LessonView courseId={page.courseId} lessonId={page.lessonId} setPage={setPage} user={user} completeLesson={completeLesson} />}
                 {page.name === 'editor' && <EditorPage
                     taskId={page.taskId}
                     setPage={setPage}

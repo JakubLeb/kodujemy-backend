@@ -151,10 +151,11 @@ function CoursesPage({ setPage, user }) {
     );
 }
 
-function CourseDetail({ courseId, setPage, user, completeLesson }) {
+function CourseDetail({ courseId, setPage, user }) {
     const course = COURSES.find(c => c.id === courseId);
     if (!course) return <div className="full-page"><div className="empty-state">Kurs nie został znaleziony.</div></div>;
     const completedLessons = new Set(user.completedLessons || []);
+    const doneCount = course.lessons.filter(l => completedLessons.has(l.id)).length;
 
     return (
         <div className="full-page">
@@ -166,22 +167,121 @@ function CourseDetail({ courseId, setPage, user, completeLesson }) {
                     <p style={{color:'var(--text-muted)'}}>{course.description}</p>
                 </div>
             </div>
-            <h2 style={{marginTop:'30px'}}>Lekcje</h2>
+            <h2 style={{marginTop:'30px'}}>Lekcje <span style={{fontSize:'13px', fontWeight:500, color:'var(--text-muted)'}}>({doneCount}/{course.lessons.length} ukończonych)</span></h2>
             <div className="lessons-list">
                 {course.lessons.map((l, idx) => {
                     const done = completedLessons.has(l.id);
                     return (
-                        <div className="lesson-item" key={l.id} onClick={() => completeLesson(course.id, l)}>
+                        <div className="lesson-item" key={l.id} onClick={() => setPage({ name: 'lesson', courseId: course.id, lessonId: l.id })}>
                             <div className={`lesson-num ${done ? 'done' : ''}`}>{done ? '✓' : idx + 1}</div>
                             <div className="lesson-name">{l.name}</div>
                             <div className="lesson-xp">+{l.xp} XP</div>
+                            <div className="lesson-chevron">›</div>
                         </div>
                     );
                 })}
             </div>
             <p style={{marginTop:'20px', fontSize:'13px', color:'var(--text-muted)', fontStyle:'italic'}}>
-                Kliknij lekcję, aby oznaczyć ją jako ukończoną i zdobyć XP. (W docelowej wersji każda lekcja będzie zawierała materiały i interaktywne ćwiczenia.)
+                Otwórz lekcję, aby przeczytać materiał i przykłady kodu, a następnie rozwiąż krótki quiz, by ją zaliczyć i zdobyć XP.
             </p>
+        </div>
+    );
+}
+
+function LessonView({ courseId, lessonId, setPage, user, completeLesson }) {
+    const course = COURSES.find(c => c.id === courseId);
+    const lesson = course?.lessons.find(l => l.id === lessonId);
+    const content = LESSON_CONTENT[lessonId];
+    const alreadyDone = (user.completedLessons || []).includes(lessonId);
+    const [quizPick, setQuizPick] = useState(null);
+
+    if (!course || !lesson) {
+        return (
+            <div className="full-page">
+                <a className="back-link" onClick={() => setPage({ name: 'courses' })}>← Wróć do kursów</a>
+                <div className="empty-state">Lekcja nie została znaleziona.</div>
+            </div>
+        );
+    }
+
+    const hasQuiz = !!content?.quiz;
+    const quizSolved = hasQuiz ? quizPick === content.quiz.answer : true;
+    const canComplete = quizSolved;
+
+    const handleComplete = () => {
+        completeLesson(courseId, lesson);
+        setPage({ name: 'course', id: courseId });
+    };
+
+    return (
+        <div className="full-page lesson-view">
+            <a className="back-link" onClick={() => setPage({ name: 'course', id: courseId })}>← Wróć do kursu: {course.title}</a>
+            <div className="lesson-head">
+                <div className="course-icon lesson-badge" style={{ background: course.color }}>{course.icon}</div>
+                <div>
+                    <h1 className="page-title" style={{marginBottom:'3px'}}>{lesson.name}</h1>
+                    <p style={{color:'var(--text-muted)'}}>
+                        {course.title} • +{lesson.xp} XP{alreadyDone && <span className="lesson-done-tag"> ✓ ukończono</span>}
+                    </p>
+                </div>
+            </div>
+
+            {content ? (
+                <article className="lesson-article">
+                    {content.intro && <p className="lesson-intro" dangerouslySetInnerHTML={{ __html: inlineCode(content.intro) }} />}
+                    {content.blocks.map((b, i) => {
+                        if (b.h) return <h2 key={i} className="lesson-h">{b.h}</h2>;
+                        if (b.p) return <p key={i} className="lesson-p" dangerouslySetInnerHTML={{ __html: inlineCode(b.p) }} />;
+                        if (b.code) return <div key={i} className="solution-code lesson-code" dangerouslySetInnerHTML={{ __html: highlightPython(b.code) }} />;
+                        if (b.tip) return (
+                            <div key={i} className="lesson-tip">
+                                <span className="lesson-tip-icon">💡</span>
+                                <span dangerouslySetInnerHTML={{ __html: inlineCode(b.tip) }} />
+                            </div>
+                        );
+                        return null;
+                    })}
+
+                    {hasQuiz && (
+                        <div className="lesson-quiz">
+                            <div className="lesson-quiz-q">Sprawdź się: {content.quiz.q}</div>
+                            <div className="lesson-quiz-options">
+                                {content.quiz.options.map((opt, i) => {
+                                    let cls = 'quiz-option';
+                                    if (quizSolved && i === content.quiz.answer) cls += ' correct';
+                                    if (!quizSolved && quizPick === i) cls += ' wrong';
+                                    return (
+                                        <button key={i} className={cls} disabled={quizSolved}
+                                            onClick={() => setQuizPick(i)}
+                                            dangerouslySetInnerHTML={{ __html: inlineCode(opt) }} />
+                                    );
+                                })}
+                            </div>
+                            {quizPick !== null && (
+                                <div className={`quiz-feedback ${quizSolved ? 'ok' : 'bad'}`}>
+                                    {quizSolved ? '✓ Dobrze! ' : '✕ To nie ta odpowiedź — spróbuj ponownie. '}
+                                    {quizSolved && content.quiz.explain}
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </article>
+            ) : (
+                <p className="lesson-p">Materiały do tej lekcji wkrótce się pojawią.</p>
+            )}
+
+            <div className="lesson-actions">
+                {alreadyDone ? (
+                    <>
+                        <button className="btn-lesson-done" disabled>✓ Lekcja ukończona</button>
+                        <button className="btn-lesson-back" onClick={() => setPage({ name: 'course', id: courseId })}>Wróć do kursu</button>
+                    </>
+                ) : (
+                    <button className="btn-lesson-complete" disabled={!canComplete} onClick={handleComplete}>
+                        {canComplete ? `Ukończ lekcję (+${lesson.xp} XP)` : 'Odpowiedz poprawnie na quiz, aby ukończyć'}
+                    </button>
+                )}
+            </div>
         </div>
     );
 }

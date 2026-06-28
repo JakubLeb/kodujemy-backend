@@ -1,4 +1,8 @@
 
+function inlineCode(text) {
+    return String(text).replace(/`([^`]+)`/g, '<span class="code-inline">$1</span>');
+}
+
 let pyodideInstance = null;
 let pyodideLoadingPromise = null;
 
